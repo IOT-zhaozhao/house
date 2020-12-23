@@ -82,7 +82,52 @@
 8.输出执行结果
 	
 	Hello World!
-# 在ubuntu中编译C++代码的两种方法 #
+# 在ubuntu中使用cmake编译C++代码 #
+
+先安装cmake，不会安装的参考我的 《ubuntu18.0.4安装cmake》
+
+使用cmake首先得有个CMakeLists.txt文件，你需要把配置信息写在该文件中，然后通过cmake去处理该文件。
 
 
+	touch CMakeList.txt
+	touch helloworld.cpp
 
+在CMakeLists.txt中配置以下信息；
+
+	cmake_minimum_required(VERSION 2.8)
+	#工程名
+	project(HELLOWORLD)
+	#包含原程序,即把给定目录下的源程序复制给变量DIR_SRC
+	#将指定路径下的源文件储存在指定的变量中
+	#下面这句话，有些博客中写错了，需要注意
+	aux_source_directory(./ DIR_SRC )
+	#生成程序
+	add_executable(HELLOWORLD  ${DIR_SRC})
+
+在helloworld.cpp中输入以下信息：
+	
+	#include<iostream>
+	int main()
+	{
+    	std::cout<<"hello world!"<<std::endl;
+    	return 0;
+	}	
+
+然后在终端中输入：
+
+
+	//按照顺序依次输入下面的命令
+	// mkdir 做一个工作空间，名称是build
+	// cd 进入build的目录 
+	//HELLOWORLD 是文件中的工程名称
+	//以上仅仅是注释
+ 
+	mkdir build 
+	cd build
+	cmake ..
+	make
+	./HELLOWORD  //区分大小写，CMakeLists.txt定义是大写就得用大写
+
+输出结果如下：
+
+	hello world!
